@@ -1,0 +1,25 @@
+name: Test code blocks
+on:    
+  pull_request:
+    branches: gh-pages
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        python-version: [3.6, 3.7, 3.8]
+    name: Python ${{ matrix.python-version }} example
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup conda
+        uses: s-weigand/setup-conda@v1
+        with:
+          update-conda: true
+          python-version: ${{ matrix.python-version }}
+          activate-conda: true
+      - name: Install test packages
+        run: pip install pytest-codeblocks
+      - name: Run tests
+        run: pytest --codeblocks _episodes 
