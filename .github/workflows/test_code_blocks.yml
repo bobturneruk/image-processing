@@ -18,6 +18,10 @@ jobs:
         with:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
-      - run: conda info
-      - run: pip install pytest-codeblocks
-      - run: pytest --codeblocks _episodes 
+      - name: Install dependencies
+        run: |
+          pip install pytest-codeblocks numpy skimage matplotlib ipympl          
+        shell: bash -l {0}
+      - name: Tests
+        run: pytest --codeblocks _episodes 
+        shell: bash -l {0}
