@@ -89,7 +89,7 @@ work our way up to that complexity.
 
 First, the necessary imports:
 
-~~~
+```python
 """
  * Python libraries for learning and performing image processing.*
 """
@@ -98,8 +98,7 @@ import skimage.io
 import skimage.viewer
 import matplotlib.pyplot as plt
 import ipympl
-~~~
-{: .language-python}
+```
 
 > ## Import Statements in Python
 >
@@ -114,12 +113,12 @@ import ipympl
 > You will encounter several different forms of `import` statement.
 >
 >
-> ~~~
+> ```
 > import skimage                 # form 1, load whole skimage library
 > import skimage.io              # form 2, load skimage.io module only
 > from skimage.io import imread  # form 3, load only the imread function
 > import numpy as np             # form 4, load all of numpy into an object called np
-> ~~~
+> ```
 > {: .language-python }
 >
 > > ## Further Explanation
@@ -164,21 +163,23 @@ we will run a Jupyter Magic Command that will ensure our images display
 in our Jupyter document with pixel information that will help us
 more efficiently run commands later in the session.
 
-~~~
+<!--pytest.mark.skip-->
+
+```python
 %matplotlib widget
-~~~
-{: .language-python}
+```
 
 With that taken care of,
 let's load our image data from disk using
 the `imread` function from the `skimage.io` library and display it using
 the `imshow` function from the `matplotlib` library.
 
-~~~
+<!--pytest-codeblocks:cont-->
+
+```python
 image = skimage.io.imread(fname="data/eight.tif")
 plt.imshow(image)
-~~~
-{: .language-python}
+```
 
 ![Image of 8](../fig/eight.png)
 
@@ -203,21 +204,21 @@ a 5 x 3 matrix of 15 pixels.
 We can demonstrate that by calling on the shape property of our image variable
 and see the matrix by printing our image variable to the screen.
 
+<!--pytest-codeblocks:cont-->
 
-~~~
+```python
 print(image.shape)
 print(image)
-~~~
-{: .language-python}
+```
 
-~~~
+```
 (5, 3)
 [[0. 0. 0.]
  [0. 1. 0.]
  [0. 0. 0.]
  [0. 1. 0.]
  [0. 0. 0.]]
-~~~
+```
 {: .output }
 
 Thus if we have tools that will allow us to manipulate these arrays of numbers,
@@ -236,7 +237,9 @@ at this small scale we can determine the centre pixel is in row labeled 2 and
 column labeled 1.
 Using array slicing, we can then address and assign a new value to that position.
 
-~~~
+<!--pytest-codeblocks:cont-->
+
+```python
 zero = skimage.io.imread(fname="data/eight.tif")
 zero[2,1]= 1.0
 """
@@ -245,16 +248,15 @@ The follwing line of code creates a new figure for imshow to use in displaying o
 fig, ax = plt.subplots()
 plt.imshow(zero)
 print(zero)
-~~~
-{: .language-python}
+```
 
-~~~
+```
 [[0. 0. 0.]
  [0. 1. 0.]
  [0. 1. 0.]
  [0. 1. 0.]
  [0. 0. 0.]]
-~~~
+```
 {: .output }
 
 ![Image of 0](../fig/zero.png)
@@ -297,6 +299,8 @@ print(zero)
 > to help bridge these two approaches.
 {: .callout }
 
+<!--pytest-codeblocks:cont-->
+
 > ## Changing Pixel Values (5 min)
 >
 > Load another copy of eight named five,
@@ -306,23 +310,23 @@ print(zero)
 > > ## Solution
 > > There are many possible solutions, but one method would be . . .
 > >
-> > ~~~
+> > ```python
 > > five = skimage.io.imread(fname="data/eight.tif")
 > > five[1,2]= 1.0
 > > five[3,0]= 1.0
 > > fig, ax = plt.subplots()
 > > plt.imshow(five)
 > > print(five)
-> > ~~~
-> > {: .language-python}
+> > ```
 > >
-> > ~~~
+> >
+> > ```
 > > [[0. 0. 0.]
 > >  [0. 1. 1.]
 > >  [0. 0. 0.]
 > >  [1. 1. 0.]
 > >  [0. 0. 0.]]
-> > ~~~
+> > ```
 > > {: .output }
 > >
 > > ![Image of 5](../fig/five.png)
@@ -337,7 +341,9 @@ One common way is to use the numbers between 0 and 255 to allow for
 256 different colours or 256 different levels of grey.
 Let's try that out.
 
-~~~
+<!--pytest-codeblocks:cont-->
+
+```python
 #make a copy of eight
 three_colours = skimage.io.imread(fname="data/eight.tif")
 
@@ -349,8 +355,7 @@ three_colours[2,:] = 255.
 fig, ax = plt.subplots()
 plt.imshow(three_colours)
 print(three_colours)
-~~~
-{: .language-python}
+```
 
 ![Image of three colours](../fig/three-colours.png)
 
@@ -380,11 +385,12 @@ For now, let's see how you can do that using an alternative map
 you have likely seen before where it will be even easier to see it as
 a mapped continuum of intensities: greyscale.
 
-~~~
+<!--pytest-codeblocks:cont-->
+
+```python
 fig, ax = plt.subplots()
 plt.imshow(three_colours,cmap=plt.cm.gray)
-~~~
-{: .language-python}
+```
 
 ![Image in greyscale](../fig/grayscale.png)
 
@@ -409,7 +415,9 @@ combine to produce a set of pixels using a 4 X 4 matrix with 3 dimensions
 for the colours red, green, and blue.
 Rather than loading it from a file, we will generate this example using numpy.
 
-~~~
+<!--pytest-codeblocks:cont-->
+
+```python
 #set the random seed so we all get the same matrix
 pseudorandomizer = np.random.RandomState(2021)
 #create a 4 X 4 checkerboard of random colours
@@ -420,10 +428,9 @@ fig, ax = plt.subplots()
 plt.imshow(checkerboard)
 #display the arrays
 print(checkerboard)
-~~~
-{: .language-python}
+```
 
-~~~
+```
 [[[116  85  57]
   [128 109  94]
   [214  44  62]
@@ -443,7 +450,7 @@ print(checkerboard)
   [120   5  49]
   [166 234 142]
   [ 71  85  70]]]
-  ~~~
+  ```
 {: .output }
 
 ![Image of checkerboard](../fig/checkerboard.png)
@@ -453,12 +460,13 @@ Now we are combining the effect of 3 numbers to arrive at a single colour value.
 Let's see an example of that using the blue square at the end of the second row,
 which has the index [1,3].
 
-~~~
+<!--pytest-codeblocks:cont-->
+
+```python
 # extract all the colour information for the blue square
 upper_right_square = checkerboard[1,3,:]
 upper_right_square
-~~~
-{: .language-python}
+```
 
 This outputs: array([  7,   1, 110])
 The integers in order represent Red, Green, and Blue.
@@ -480,26 +488,33 @@ to help us understand what is happening.
 We can do that by multiplying our image array representation with
 a 1d matrix that has a one for the channel we want to keep and zeros for the rest.
 
-~~~
+<!--pytest-codeblocks:cont-->
+
+```python
 red_channel = checkerboard * [1,0,0]
 fig, ax = plt.subplots()
 plt.imshow(red_channel)
-~~~
-{: .language-python}
+```
+
 ![Image of red channel](../fig/checkerboard-red-channel.png)
-~~~
+
+<!--pytest-codeblocks:cont-->
+
+```python
 green_channel = checkerboard * [0,1,0]
 fig, ax = plt.subplots()
 plt.imshow(green_channel)
-~~~
-{: .language-python}
+```
+
 ![Image of green channel](../fig/checkerboard-green-channel.png)
-~~~
+
+<!--pytest-codeblocks:cont-->
+
+```python
 blue_channel = checkerboard * [0,0,1]
 fig, ax = plt.subplots()
 plt.imshow(blue_channel)
-~~~
-{: .language-python}
+```
 
 ![Image of blue channel](../fig/checkerboard-blue-channel.png)
 
@@ -810,13 +825,15 @@ It supports 24-bit colour depth,
 and since the format is so widely used,
 JPEG images can be viewed and manipulated easily on all computing platforms.
 
+<!--pytest-codeblocks:cont-->
+
 > ## Examining actual image sizes (optional, not included in timing)
 >
 > Let us see the effects of image compression on image size with actual images.
 > The following script creates a square white image 5000 X 5000 pixels,
 > and then saves it as a BMP and as a JPEG image.
 >
-> ~~~
+> ```python
 > import skimage.io
 > import numpy as np
 >
@@ -827,8 +844,8 @@ JPEG images can be viewed and manipulated easily on all computing platforms.
 >
 > skimage.io.imsave(fname="data/ws.bmp", arr=img)
 > skimage.io.imsave(fname="data/ws.jpg", arr=img)
-> ~~~
-> {: .language-python}
+> ```
+>
 >
 > Examine the file sizes of the two output files, `ws.bmp` and `ws.jpg`.
 > Does the BMP image size match our previous prediction?
@@ -869,12 +886,12 @@ JPEG images can be viewed and manipulated easily on all computing platforms.
 > >
 > > Here is a partial directory listing, showing the sizes of the relevant files there:
 > >
-> > ~~~
+> > ```
 > > -rw-rw-r--  1 diva diva   154344 Jun 18 08:32 tree.jpg
 > > -rw-rw-r--  1 diva diva   146049 Jun 18 08:53 tree.zip
 > > -rw-rw-r--  1 diva diva 75000054 Jun 18 08:51 ws.bmp
 > > -rw-rw-r--  1 diva diva    72986 Jun 18 08:53 ws.zip
-> > ~~~
+> > ```
 > > {: .output}
 > >
 > > We can see that the regularity of the bitmap image

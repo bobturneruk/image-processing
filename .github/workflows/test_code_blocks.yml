@@ -1,0 +1,27 @@
+name: Test code blocks
+on:    
+  pull_request:
+    branches: gh-pages
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        python-version: [3.7, 3.8, 3.9]
+    name: ${{ matrix.os }}, Python ${{ matrix.python-version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python using Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          pip install pytest-codeblocks numpy scikit-image matplotlib ipympl          
+        shell: bash -l {0}
+      - name: Tests
+        run: pytest --codeblocks _episodes 
+        shell: bash -l {0}
