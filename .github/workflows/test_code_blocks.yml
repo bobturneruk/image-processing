@@ -19,7 +19,5 @@ jobs:
           update-conda: true
           python-version: ${{ matrix.python-version }}
           activate-conda: true
-      - name: Install test packages
-        run: pip install pytest-codeblocks
-      - name: Run tests
-        run: pytest --codeblocks _episodes 
+      -  run: pip install pytest-codeblocks
+      -  run: pytest --codeblocks _episodes 
