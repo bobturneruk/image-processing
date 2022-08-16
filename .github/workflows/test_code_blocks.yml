@@ -20,7 +20,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install pytest-codeblocks numpy skimage matplotlib ipympl          
+          pip install pytest-codeblocks numpy scikit-image matplotlib ipympl          
         shell: bash -l {0}
       - name: Tests
         run: pytest --codeblocks _episodes 
