@@ -18,11 +18,6 @@ jobs:
         with:
           update-conda: true
           python-version: ${{ matrix.python-version }}
-      - run: conda activate base
-        shell: bash -l {0}
       - run: conda info
-        shell: bash -l {0}
       - run: pip install pytest-codeblocks
-        shell: bash -l {0}
       - run: pytest --codeblocks _episodes 
-        shell: bash -l {0}
